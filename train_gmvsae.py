@@ -188,7 +188,7 @@ class train_gmvsae:
         return torch.cat(G, 1)
 
     def Loss(self, x_hat, targets, z_mu, z_sigma2_log, z, lengths):
-        pi = self.model.pi_prior
+        pi = F.softmax(self.model.pi_prior, dim=-1)
         log_sigma2_c = self.model.log_var_prior
         mu_c = self.model.mu_prior
 
