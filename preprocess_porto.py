@@ -71,7 +71,7 @@ def main():
     train_data, test_data = devide(trajs)
     np.save('data/porto/train_data.npy', np.array(train_data, dtype=object))
     np.save('data/porto/test_data.npy', np.array(test_data, dtype=object))
-    print('Fnished!')
+    print('Finished!')
 
 
 if __name__ == '__main__':
