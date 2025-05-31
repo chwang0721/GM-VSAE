@@ -13,3 +13,4 @@ python generate_outliers.py
 ```
 python train_gmvsae.py
 ```
+Our code is based on https://github.com/liuyiding1993/ICDE2020_GMVSAE
