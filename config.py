@@ -9,7 +9,7 @@ parser.add_argument('--n_cluster', type=int, default=10)
 parser.add_argument('--pretrain_lr', type=float, default=1e-3)
 parser.add_argument('--pretrain_epochs', type=int, default=10)
 parser.add_argument('--lr', type=float, default=3e-4)
-parser.add_argument('--epochs', type=int, default=8)
+parser.add_argument('--epochs', type=int, default=10)
 
 parser.add_argument('--ratio', type=float, default=0.05, help='ratio of outliers')
 parser.add_argument('--level', type=int, default=3)

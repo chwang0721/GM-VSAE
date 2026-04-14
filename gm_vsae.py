@@ -26,20 +26,23 @@ class GM_VSAE(nn.Module):
         eps = torch.randn_like(std)
         return mu + eps * std
 
-    def forward(self, trajs, lengths, mode, c):
+    def forward(self, trajs, lengths, mode, c, sample_latent=True):
         batch_size = len(trajs)
         e_input = self.embedding(trajs)
         d_input = torch.cat((torch.zeros(batch_size, 1, e_input.size(-1), dtype=torch.long).to(e_input.device),
                              e_input[:, :-1, :]), dim=1)
         decoder_inputs = pack_padded_sequence(d_input, lengths, batch_first=True, enforce_sorted=False)
 
-        if mode == 'pretrain' or 'train':
+        if mode == 'pretrain' or mode == 'train':
             encoder_inputs = pack_padded_sequence(e_input, lengths, batch_first=True, enforce_sorted=False)
             _, encoder_final_state = self.encoder(encoder_inputs)
 
             mu = self.fc_mu(encoder_final_state)
             logvar = self.fc_logvar(encoder_final_state)
-            z = self.reparameterize(mu, logvar)
+            if sample_latent:
+                z = self.reparameterize(mu, logvar)
+            else:
+                z = mu
             decoder_outputs, _ = self.decoder(decoder_inputs, z)
             decoder_outputs, _ = pad_packed_sequence(decoder_outputs, batch_first=True)
 
